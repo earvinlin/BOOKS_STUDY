@@ -1,0 +1,3 @@
+#!/home/earvin/anaconda3/envs/Python39/bin/python3.9
+print('The Bright Side ' + 'of life ...')
+

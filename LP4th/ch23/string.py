@@ -1,0 +1,1 @@
+print("from string.py : ",'Ni' * 8)
