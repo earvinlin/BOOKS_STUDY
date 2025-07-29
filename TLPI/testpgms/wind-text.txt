@@ -1,0 +1,8 @@
+This is create from windows.
+It is be use for test about C read it 
+     from text- mode or binray mode.
+
+This should be different result.
+
+Add one line.
+Add one line again.
