@@ -1,8 +1,10 @@
 # BOOKS_STUDY
+CPrimer6th
 DLI16
 DLWP
 DSBM
 FinTechByPython
+HFC
 LP4th
 LP5th
 PC3rd
