@@ -24,5 +24,14 @@ def inspect_zip(zip_path):
         print(f"❌ 發生錯誤：{e}")
 
 # 範例使用方式
-zip_file_path = 'your_file.zip'  # 請替換為你的 ZIP 檔案路徑
+zip_file_path = 'E:\A2025-07-31_v1.zip'  # 請替換為你的 ZIP 檔案路徑
 inspect_zip(zip_file_path)
+
+
+# zip_path = 'example.zip'
+extract_folder = 'E:\extracted_files'
+
+with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+    zip_ref.extractall(extract_folder)
+
+print("ZIP檔案解壓完成")
