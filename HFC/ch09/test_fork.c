@@ -10,10 +10,11 @@
 #include <unistd.h>
 
 int main() {
+    // pid 子行程的pid
     pid_t pid = fork();
 
     if (pid < 0) {
-        perror("fork failed");
+        perror("fork failed.");
     } else if (pid == 0) {
         printf("這是子行程，PID = %d，父 PID = %d\n", getpid(), getppid());
     } else {
