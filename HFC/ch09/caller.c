@@ -34,7 +34,6 @@ int main()
 
 #elif defined(__APPLE__) && defined(__MACH__)
     printf("macOS\n");
-    printf("Linux\n");
     if (execle("diner_info_mac", "diner_info_mac", "4", NULL, my_env) == -1) {
         fprintf(stderr, "Cannot run ipconfig: %s\n", strerror(errno));
         return 1;
