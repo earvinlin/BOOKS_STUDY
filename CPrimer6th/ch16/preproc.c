@@ -8,6 +8,8 @@ tive. - Oscar Wilde" /* a backslash continues a definition */
 #define PX printf("X is %d.\n", x)
 #define FMT "X is %d.\n"
 
+#define MEAN(X, Y) (((X) + (Y)) / 2)
+
 int main(void)
 {
     int x = TWO;
@@ -17,6 +19,8 @@ int main(void)
     printf("%s\n", OW);
     printf("TWO: OW\n");
     
+    printf("2+3 = %d\n", MEAN(2, 3));
+
     return 0;
 }
 
