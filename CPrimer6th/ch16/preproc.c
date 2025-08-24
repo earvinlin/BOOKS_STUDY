@@ -1,4 +1,7 @@
-/* preproc.c -- simple preprocessor examples */
+/* 
+ * 範例 16.1 (p.16-2)
+ * preproc.c -- simple preprocessor examples 
+ */
 #include <stdio.h>
 #define TWO 2 /* you can use comments if you like */
 #define OW "Consistency is the last refuge of the unimagina\
