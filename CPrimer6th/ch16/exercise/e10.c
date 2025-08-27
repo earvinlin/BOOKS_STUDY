@@ -1,3 +1,6 @@
+/*
+    編譯指令：gcc e10.c -o e10 -lm
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
