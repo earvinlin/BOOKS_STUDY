@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
         if (errno != ENOENT) {          /* Failed for unexpected reason */
             errExit("open");
         } else {
+            /* WINDOW FOR FAILURE */
             printf("[PID %ld] File \"%s\" doesn't exist yet\n",
                     (long) getpid(), argv[1]);
             if (argc > 2) {             /* Delay between check and create */
