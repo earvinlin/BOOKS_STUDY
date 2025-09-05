@@ -1,0 +1,32 @@
+FROM ubuntu:20.04
+LABEL maintainer="earvinlin.01@gmail.com"
+
+#下面開始運行命令 此處更改ubuntu的套件來源為國網的鏡像網站
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main restricted universe multiverse\n\
+deb http://archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse\n\
+deb http://archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse\n\
+deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" > /etc/apt/sources.list && \
+apt-get update && \
+apt-get install -y openssh-server && \
+mkdir -p /var/run/sshd /root/.ssh && \
+sed -ri 's/session required pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd
+
+#RUN apt-get update
+#安裝ssh股務
+#RUN apt-get install -y openssh-server
+#RUN mkdir -p /var/run/sshd
+#RUN mkdir -p /root/.ssh
+#取消pam限制
+#RUN sed -ri 's/session required pam_loginuid.so/#session required pam_loginuid.so/g' /etc/pam.d/sshd
+
+#複製設定檔到相應位置 並賦予shell script檔執行權限
+ADD authorized_keys /root/.ssh/authorized_keys
+ADD run.sh /run.sh
+RUN chmod 755 /run.sh
+
+#設定開放連接埠
+EXPOSE 22
+
+#設置自動啟動命令
+CMD ["/run.sh"]
+
