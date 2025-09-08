@@ -7,8 +7,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -yq install apache2 && \
         rm -rf /var/lib/apt/lists/*
 
-RUN echo "Asia/Taipei" > /etc/timezone && \
-        dpkg-reconfigure -f noninteractive  tzdata
+#RUN echo "Asia/Taipei" > /etc/timezone && \
+#        dpkg-reconfigure -f noninteractive  tzdata
+ENV TZ=Asia/Taipei
+RUN apt-get update && apt-get install -y tzdata && \
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+
 
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
