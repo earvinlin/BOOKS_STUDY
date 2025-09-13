@@ -1,41 +1,18 @@
-FROM sshd:dockerfile
+# 使用官方 Debian 基礎映像
+FROM debian:bullseye
 
-LABEL maintainer="earvinlin.01@gmail.com"
+# 安裝 Apache HTTP Server
+RUN apt-get update && \
+    apt-get install -y apache2 && \
+    apt-get clean
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get -yq install apache2 && \
-        rm -rf /var/lib/apt/lists/*
-
-#RUN echo "Asia/Taipei" > /etc/timezone && \
-#        dpkg-reconfigure -f noninteractive  tzdata
-ENV TZ=Asia/Taipei
-RUN apt-get update && apt-get install -y tzdata && \
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata
-
-
-
-ADD run.sh /run.sh
-RUN chmod 755 /*.sh
-
+# Marked 2025.09.12
 RUN mkdir -p /var/lock/apache2 && mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 COPY sample/ /app
-
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
-ENV APACHE_RUN_DIR /var/run/apache2
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_SERVERADMIN admin@localhost
-ENV APACHE_SERVERNAME localhost
-ENV APACHE_SERVERALIAS docker.localhost
-ENV APACHE_DOCUMENTROOT /var/www
-
-EXPOSE 80
 WORKDIR /app
-CMD ["/run.sh"]
 
+# 開放 80 port
+EXPOSE 80
 
-
+# 啟動 Apache（前景模式）
+CMD ["apachectl", "-D", "FOREGROUND"]
