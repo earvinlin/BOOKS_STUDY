@@ -1,0 +1,11 @@
+【ln 指令】
+建立軟式連結： ln -s test.txt test-slink.txt
+建立硬式連結： ln test.txt test-hlink.txt
+
+Quest: 為什麼 inode 不同？
+．硬連結 (Hard Link)：多個檔名指向同一個 inode → 所以 inode 編號相同。
+．軟連結 (Soft Link / Symbolic Link)：是一個「獨立的檔案」，它的內容只是
+  「存放目標檔案的路徑字串」。
+  ．因此，軟連結本身會有 自己的 inode。
+  ．這個 inode 描述的不是目標檔案的資料，而是「一段路徑字串」。
+
