@@ -1,4 +1,5 @@
-#include "../../tlpi-book/mylib/tlpi_hdr.h"
+#include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu use
+//#include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For mac-mini(m2)'s vmubuntu use
 
 /* Print 'msg' plus value of fpathconf(fd, name) */
 static void fpathconfPrint(const char *msg, int fd, int name) {
