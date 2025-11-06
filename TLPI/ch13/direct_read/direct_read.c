@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     int fd;
-    ssize_t numRead;
+    ssize_t numRead; 
     size_t length, alignment;
     off_t offset;
     void *buf;
