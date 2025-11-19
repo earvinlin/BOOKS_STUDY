@@ -1,8 +1,11 @@
 #include <acl/libacl.h>
 #include <sys/acl.h>
 #include "ugid_functions.h"
-#include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu use
-//#include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For mac-mini(m2)'s vmubuntu use
+#if defined(USE_MYLIB_INTEL)
+    #include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
 
 static void usageError(char *progName) {
     fprintf(stderr, "Usage: %s [-d] filename\n", progName);
