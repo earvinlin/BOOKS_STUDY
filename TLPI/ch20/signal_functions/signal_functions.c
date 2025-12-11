@@ -1,7 +1,9 @@
 #define _GNU_SOURCE
 #include <string.h>
 #include <signal.h>
-#include "../../tlpi-book/mylib-intel/signal_functions.h" /* Declares functions defined here */
+// #include "../../tlpi-book/mylib-intel/signal_functions.h" /* Declares functions defined here */
+//#include "../../tlpi-book/signals/signal_functions.h"
+#include "signal_functions.h"
 #if defined(USE_MYLIB_INTEL)
     #include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
 #else
