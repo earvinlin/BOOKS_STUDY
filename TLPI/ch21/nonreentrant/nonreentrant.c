@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <crypt.h>
 #if defined(USE_MYLIB_INTEL)
     #include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
 #else
