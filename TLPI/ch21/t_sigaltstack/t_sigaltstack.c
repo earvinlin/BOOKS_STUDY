@@ -7,7 +7,6 @@
     #include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
 #endif
 
-
 static void sigsegvHandler(int sig) {
     int x;
     /* UNSAFE: This handler uses non-async-signal-safe functions
