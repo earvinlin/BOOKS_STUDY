@@ -10,14 +10,17 @@
 #endif
 #define TIMER_SIG SIGRTMAX /* Our timer notification signal */
 
+// 訊號處理函式
 static void handler(int sig, siginfo_t *si, void *uc) {
     timer_t *tidptr;
-    tidptr = si->si_value.sival_ptr;
+    // 使用 siginfo_t 取得 sigev_value.sival_ptr，知道是哪個定時器觸發
+    tidptr = si->si_value.sival_ptr;    
 
     /* UNSAFE: This handler uses non-async-signal-safe functions
         (printf(); see Section 21.1.2) */
     printf("[%s] Got signal %d\n", currTime("%T"), sig);
     printf(" *sival_ptr = %ld\n", (long) *tidptr);
+    // timer_getoverrun()：檢查是否有訊號遺失(定時器過期次數超過一次)
     printf(" timer_getoverrun() = %d\n", timer_getoverrun(*tidptr));
 }
 
@@ -36,20 +39,20 @@ int main(int argc, char *argv[])
     if (tidlist == NULL)
         errExit("malloc");
 
-    /* Establish handler for notification signal */
+    /* 建立訊號處理器 : Establish handler for notification signal */
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = handler;
     sigemptyset(&sa.sa_mask);
     if (sigaction(TIMER_SIG, &sa, NULL) == -1)
         errExit("sigaction");
 
-    /* Create and start one timer for each command-line argument */
+    /* 建立定時器 : Create and start one timer for each command-line argument */
     sev.sigev_notify = SIGEV_SIGNAL; /* Notify via signal */
     sev.sigev_signo = TIMER_SIG; /* Notify using this signal */
     for (j = 0; j < argc - 1; j++) {
         itimerspecFromStr(argv[j + 1], &ts);
         sev.sigev_value.sival_ptr = &tidlist[j];
-        
+
         /* Allows handler to get ID of this timer */
         if (timer_create(CLOCK_REALTIME, &sev, &tidlist[j]) == -1)
             errExit("timer_create");
@@ -58,6 +61,8 @@ int main(int argc, char *argv[])
         if (timer_settime(tidlist[j], 0, &ts, NULL) == -1)
             errExit("timer_settime");
     }
-    for (;;) /* Wait for incoming timer signals */
+
+    /* 等待訊號 : Wait for incoming timer signals */
+    for (;;) 
         pause();
 }
