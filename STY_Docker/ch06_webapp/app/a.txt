@@ -1,0 +1,16 @@
+CONTAINER ID   IMAGE             COMMAND                   CREATED         STATUS                     PORTS                                         NAMES
+13d49e3a3013   python:3.9-slim   "python app.py"           7 minutes ago   Exited (2) 7 minutes ago                                                 web
+e80a3cb0283a   registry          "/entrypoint.sh /etc…"   3 days ago      Up 3 days                  0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   relaxed_hoover
+c621119feca4   registry          "/entrypoint.sh /etc…"   3 days ago      Created                                                                  gifted_gagarin
+d601de70bc70   registry          "/entrypoint.sh /etc…"   3 days ago      Exited (2) 3 days ago                                                    vigorous_swanson
+311ee777671a   ubuntu            "/bin/bash"               10 days ago     Up 10 days                                                               compassionate_swanson
+4b7d958ed0ce   ubuntu            "/bin/bash"               10 days ago     Exited (0) 10 days ago                                                   infallible_greider
+335c2980e794   test:latest       "/bin/bash"               3 weeks ago     Exited (129) 2 weeks ago                                                 gifted_almeida
+26138363f625   ubuntu:latest     "/bin/bash"               3 weeks ago     Exited (0) 3 weeks ago                                                   focused_mendeleev
+1c5a95ba3675   ubuntu            "/bin/bash"               3 weeks ago     Exited (0) 3 weeks ago                                                   thirsty_davinci
+b0ec890a6009   ubuntu            "/bin/bash"               3 weeks ago     Exited (0) 3 weeks ago                                                   happy_sutherland
+01e9338e1815   ubuntu:latest     "/bin/bash"               3 weeks ago     Exited (0) 3 weeks ago                                                   ecstatic_rosalind
+7df611a03ab0   ubuntu            "echo 'Hello! I am h…"   3 weeks ago     Exited (0) 3 weeks ago                                                   kind_engelbart
+2e141dc296c5   mynginx:a         "/docker-entrypoint.…"   4 weeks ago     Exited (255) 4 weeks ago   80/tcp                                        epic_benz
+4f04b934faa0   mynginx:a         "/docker-entrypoint.…"   5 weeks ago     Exited (137) 5 weeks ago                                                 loving_vaughan
+607a115ec1f9   nginx             "/docker-entrypoint.…"   6 weeks ago     Exited (129) 6 weeks ago                                                 nginx-a
