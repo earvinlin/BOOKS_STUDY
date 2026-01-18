@@ -1,3 +1,6 @@
+/*
+ * Listing 23-5: POSIX timer notification using a signal
+*/
 #define _POSIX_C_SOURCE 199309
 #include <signal.h>
 #include <time.h>
