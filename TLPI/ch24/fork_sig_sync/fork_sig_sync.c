@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     sigset_t blockMask, origMask, emptyMask;
     struct sigaction sa;
 
+    // 阻塞訊號
     setbuf(stdout, NULL); /* Disable buffering of stdout */
     sigemptyset(&blockMask);
     sigaddset(&blockMask, SYNC_SIG); /* Block signal */
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
 
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
-    sa.sa_handler = handler;
+    sa.sa_handler = handler;    // 設定訊號處理器
 
     if (sigaction(SYNC_SIG, &sa, NULL) == -1)
         errExit("sigaction");
