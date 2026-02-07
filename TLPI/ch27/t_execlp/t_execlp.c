@@ -6,12 +6,10 @@
 
 int main(int argc, char *argv[])
 {
-    printf("Hello world\n");
-    write(STDOUT_FILENO, "Ciao\n", 5);
+    if (argc != 2 || strcmp(argv[1], "--help") == 0)
+        usageErr("%s pathname\n", argv[0]);
 
-    if (fork() == -1)
-        errExit("fork");
+    execlp(argv[1], argv[1], "hello world", (char *) NULL);
 
-    /* Both child and parent continue execution here */
-    exit(EXIT_SUCCESS);
+    errExit("execlp"); /* If we get here, something went wrong */
 }

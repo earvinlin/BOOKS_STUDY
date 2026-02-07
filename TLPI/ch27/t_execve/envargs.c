@@ -4,14 +4,18 @@
     #include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
 #endif
 
+extern char **environ;
+
 int main(int argc, char *argv[])
 {
-    printf("Hello world\n");
-    write(STDOUT_FILENO, "Ciao\n", 5);
+    int j;
+    char **ep;
 
-    if (fork() == -1)
-        errExit("fork");
+    for (j = 0; j < argc; j++)
+        printf("argv[%d] = %s\n", j, argv[j]);
+    
+    for (ep = environ; *ep != NULL; ep++)
+        printf("environ: %s\n", *ep);
 
-    /* Both child and parent continue execution here */
     exit(EXIT_SUCCESS);
 }
