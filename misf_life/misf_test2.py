@@ -11,8 +11,8 @@ import csv
 results = []
 
 # ====== 使用者帳密 ======
-ACCOUNT = "AAA"
-PASSWORD = "BBB"
+ACCOUNT = "A121539472"
+PASSWORD = "E98321600l@"
 
 # ====== 定義：執行一次 Tab 切換測試 ======
 def run_tab_test(round_no: int):
@@ -82,20 +82,24 @@ password_input.send_keys(PASSWORD)
 log_time("帳密輸入完成")
 
 # 等待10秒手動輸入圖形識別數字及OTP驗證碼
-time.sleep(10)
+time.sleep(20)
 
+"""
 # ====== 按登入 ======
 login_button = wait.until(
     EC.element_to_be_clickable((By.ID, "loginBtn"))
 )
 # login_button.click()
 log_time("登入按鈕已點擊")
+"""
 
 # ====== 等待登入後頁面載入 ======
 # 依照實際登入後頁面調整等待條件
 wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 log_time("登入後頁面載入完成")
 
+# 等待10秒手動輸入圖形識別數字及OTP驗證碼
+time.sleep(20)
 
 """
 # 點擊所有 Tabs（未提交 / 未簽署 / 進件中…）
