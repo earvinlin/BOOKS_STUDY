@@ -8,8 +8,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # ====== 使用者帳密 ======
-ACCOUNT = "A121539472"
-PASSWORD = "E98321600l@"
+ACCOUNT = "AAA"
+PASSWORD = "BBB"
 
 # ====== 啟動 Chrome ======
 options = Options()
