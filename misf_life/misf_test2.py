@@ -11,8 +11,8 @@ import csv
 results = []
 
 # ====== 使用者帳密 ======
-ACCOUNT = "A121539472"
-PASSWORD = "E98321600l@"
+ACCOUNT = "AAA"
+PASSWORD = "BBB"
 
 # ====== 定義：執行一次 Tab 切換測試 ======
 def run_tab_test(round_no: int):
