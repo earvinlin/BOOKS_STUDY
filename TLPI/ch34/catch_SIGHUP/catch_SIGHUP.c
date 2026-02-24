@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
                   will die if nothing else terminates it */   
 
     for(;;) { /* Wait for signals */
-        pause();
+        pause();    // 阻塞，直到收到訊號。
         printf("%ld: caught SIGHUP\n", (long) getpid());
     }
 }
