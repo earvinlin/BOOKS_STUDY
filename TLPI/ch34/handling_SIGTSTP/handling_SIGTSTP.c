@@ -13,10 +13,13 @@ static void tstpHandler(int sig) {
 
     savedErrno = errno; /* In case we change 'errno' here */
 
+    // 通知收到 Ctrl+Z
     printf("Caught SIGTSTP\n"); /* UNSAFE (see Section 21.1.2) */
 
+    // 將 SIGTSTP 設為預設行為
     if (signal(SIGTSTP, SIG_DFL) == SIG_ERR)
         errExit("signal"); /* Set handling to default */
+    // 觸發 SIGTSTP → 進程會暫停
     raise(SIGTSTP); /* Generate a further SIGTSTP */
 
     /* Unblock SIGTSTP; the pending SIGTSTP immediately suspends the program */
@@ -24,10 +27,13 @@ static void tstpHandler(int sig) {
     sigemptyset(&tstpMask);
     sigaddset(&tstpMask, SIGTSTP);
 
+    // 解除阻擋
     if (sigprocmask(SIG_UNBLOCK, &tstpMask, &prevMask) == -1)
         errExit("sigprocmask");
 
     /* Execution resumes here after SIGCONT */
+
+    // 恢復原本的 mask    
     if (sigprocmask(SIG_SETMASK, &prevMask, NULL) == -1)
         errExit("sigprocmask"); /* Reblock SIGTSTP */
 
@@ -35,6 +41,7 @@ static void tstpHandler(int sig) {
     sa.sa_flags = SA_RESTART;
     sa.sa_handler = tstpHandler;
 
+    // 重新安裝 handler
     if (sigaction(SIGTSTP, &sa, NULL) == -1)
         errExit("sigaction");
 
@@ -51,6 +58,7 @@ int main(int argc, char *argv[])
         errExit("sigaction");
 
     if (sa.sa_handler != SIG_IGN) {
+        // 安裝自訂 SIGTSTP 處理器
         sigemptyset(&sa.sa_mask);
         sa.sa_flags = SA_RESTART;
         sa.sa_handler = tstpHandler;
