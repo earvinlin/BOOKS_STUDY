@@ -1,5 +1,5 @@
 #include <sys/resource.h>
-#include "print_rlimit.h" /* Declares function defined here */
+#include "../../tlpi-book/mylib/print_rlimit.h" /* Declares function defined here */
 #if defined(USE_MYLIB_INTEL)
     #include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
 #else
