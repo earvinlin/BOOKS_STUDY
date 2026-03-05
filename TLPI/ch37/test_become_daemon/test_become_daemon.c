@@ -10,11 +10,14 @@
 
 /* Supplementary program for Chapter 37 */
 
-#include "become_daemon.h"
-#include "tlpi_hdr.h"
+#include "../../tlpi-book/mylib/become_daemon.h"
+#if defined(USE_MYLIB_INTEL)
+    #include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     becomeDaemon(0);
 
