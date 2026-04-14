@@ -22,14 +22,17 @@ int main(int argc, char *argv[])
 
     /* Get server's queue identifier; create queue for response */
 
+    // 1. 建立 server queue（用來送 request）
     serverId = msgget(SERVER_KEY, S_IWUSR);
     if (serverId == -1)
         errExit("msgget - server message queue");
 
+    // 2. 建立 client queue（用來收回應）
     clientId = msgget(IPC_PRIVATE, S_IRUSR | S_IWUSR | S_IWGRP);
     if (clientId == -1)
         errExit("msgget - client message queue");
 
+    // 3. 註冊 atexit()：程式結束時刪除 client queue
     if (atexit(removeQueue) != 0)
         errExit("atexit");
 
@@ -42,10 +45,13 @@ int main(int argc, char *argv[])
     
     /* Ensure string is terminated */
     
+    // 4. 傳送 request 給 server
     if (msgsnd(serverId, &req, REQ_MSG_SIZE, 0) == -1)
         errExit("msgsnd");
     
     /* Get first response, which may be failure notification */
+
+    // 5. 接收 server 回傳的第一則訊息
     msgLen = msgrcv(clientId, &resp, RESP_MSG_SIZE, 0, 0);
     if (msgLen == -1)
         errExit("msgrcv");
@@ -61,6 +67,7 @@ int main(int argc, char *argv[])
     /* File was opened successfully by server; process messages
         (including the one already received) containing file data */
 
+    // 6. 持續接收 RESP_MT_DATA，直到收到 RESP_MT_END
     totBytes = msgLen; /* Count first message */
     for (numMsgs = 1; resp.mtype == RESP_MT_DATA; numMsgs++) {
         msgLen = msgrcv(clientId, &resp, RESP_MSG_SIZE, 0, 0);
