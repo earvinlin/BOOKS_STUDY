@@ -1,6 +1,11 @@
 #include <sys/mman.h>
 #include <fcntl.h>
-#include "tlpi_hdr.h"
+#if defined(USE_MYLIB_INTEL)
+    #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
+
 #define MEM_SIZE 10
 
 int main(int argc, char *argv[])
