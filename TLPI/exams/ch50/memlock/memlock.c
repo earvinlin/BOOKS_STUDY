@@ -22,8 +22,12 @@ static void displayMincore(char *addr, size_t length) {
         errExit("mincore");
 
     for (j = 0; j < numPages; j++) {
-        if (j % 64 == 0)
+        //// j % 64 == 0：每 64 頁觸發一次。
+        if (j % 64 == 0) 
+            // (j == 0) ? "" : "\n"：第一行不換行，之後每次都先換行。
+            // addr + (j * pageSize)：計算第 j 頁的起始位址，並印出來。
             printf("%s%10p: ", (j == 0) ? "" : "\n", addr + (j * pageSize));
+            
         printf("%c", (vec[j] & 1) ? '*' : '.');
     }
     printf("\n");
