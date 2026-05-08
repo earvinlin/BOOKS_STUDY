@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
                 flags |= O_CREAT;
                 break;
             case 'm':
-                attr.mq_maxmsg = atoi(optarg);
+                attr.mq_maxmsg = atoi(optarg);  // optarg：指向選項的參數字串（若有）。
                 attrp = &attr;
                 break;
             case 's':
@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    // optind：下一個要處理的 argv 索引，初始值為 1。
     if (optind >= argc)
         usageError(argv[0]);
 
