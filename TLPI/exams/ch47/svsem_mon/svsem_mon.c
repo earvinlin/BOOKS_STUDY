@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     if (argc != 2 || strcmp(argv[1], "--help") == 0)
         usageErr("%s semid\n", argv[0]);
 
-    semid = getInt(argv[1], 0, "semid");
+    // tlpi_hdr.h → errExit(), getInt() 等工具
+    semid = getInt(argv[1], 0, "semid");    
     arg.buf = &ds;
 
     if (semctl(semid, 0, IPC_STAT, arg) == -1)
