@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     flags = O_RDWR;
 
     while ((opt = getopt(argc, argv, "cx")) != -1) {
+        // 處理 -c 與 -x 選項
+        // -c → 若不存在則建立（O_CREAT）
+        // -x → 搭配 -c 使用，要求「獨佔建立」（O_EXCL），若已存在則失敗
         switch (opt) {
             case 'c': flags |= O_CREAT; break;
             case 'x': flags |= O_EXCL; break;
@@ -41,15 +44,18 @@ int main(int argc, char *argv[])
 
     /* Create shared memory object and set its size */
 
+    // 使用 shm_open() 建立或開啟一個 POSIX 共享記憶體物件
     fd = shm_open(argv[optind], flags, perms);
     if (fd == -1)
         errExit("shm_open");
 
+    // 使用 ftruncate() 設定共享記憶體大小
     if (ftruncate(fd, size) == -1)
         errExit("ftruncate");
 
     /* Map shared memory object */
 
+    // 使用 mmap() 將共享記憶體映射到行程位址空間
     addr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (addr == MAP_FAILED)
         errExit("mmap");
