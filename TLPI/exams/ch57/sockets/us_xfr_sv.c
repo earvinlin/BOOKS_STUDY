@@ -35,6 +35,8 @@ and make this a listening socket */
             socket, 'cfd'; the listening socket ('sfd') remains open
             and can be used to accept further connections. */
  
+        printf("Waiting for a connection...\n");
+
         cfd = accept(sfd, NULL, NULL);
         if (cfd == -1)
             errExit("accept");
