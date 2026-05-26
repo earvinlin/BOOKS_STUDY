@@ -1,5 +1,5 @@
 #include <fcntl.h>
-#include "region_locking.h" /* Declares functions defined here */
+#include "../../../tlpi-book/filelock/region_locking.h" /* Declares functions defined here */
 
 /* Lock a file region (private; public interfaces below) */
 

@@ -1,7 +1,13 @@
 #include <sys/stat.h>
 #include <fcntl.h>
+<<<<<<< HEAD
 #include "region_locking.h" /* For lockRegion() */
 #include "create_pid_file.h" /* Declares createPidFile() and defines CPF_CLOEXEC */
+=======
+#include "../../../tlpi-book/filelock/region_locking.h" /* For lockRegion() */
+#include "../../../tlpi-book/filelock/create_pid_file.h" /* Declares createPidFile() and
+defines CPF_CLOEXEC */
+>>>>>>> 7bf4298c77e99474195e55a217ded06638a2facc
 #if defined(USE_MYLIB_INTEL)
     #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"       // For linux(intel) use
 #else
@@ -50,7 +56,10 @@ int createPidFile(const char *progName, const char *pidFile, int flags) {
         errExit("Could not truncate PID file '%s'", pidFile);
 
     snprintf(buf, BUF_SIZE, "%ld\n", (long) getpid());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7bf4298c77e99474195e55a217ded06638a2facc
     if (write(fd, buf, strlen(buf)) != strlen(buf))
         fatal("Writing to PID file '%s'", pidFile);
 
