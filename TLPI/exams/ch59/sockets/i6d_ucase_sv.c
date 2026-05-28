@@ -36,9 +36,26 @@ int main(int argc, char *argv[])
             printf("Server received %ld bytes from (%s, %u)\n",
                 (long) numBytes, claddrStr, ntohs(claddr.sin6_port));
 
+        // 將收到的字串轉成大寫
         for (j = 0; j < numBytes; j++)
             buf[j] = toupper((unsigned char) buf[j]);
+        // 回傳資料給 client
         if (sendto(sfd, buf, numBytes, 0, (struct sockaddr *) &claddr, len) != numBytes)
             fatal("sendto");
     }
 }
+/* 整體流程（ASCII 圖）
+Client → UDP packet → Server
+                      |
+                      v
+                recvfrom()
+                      |
+                      v
+                轉成大寫
+                      |
+                      v
+                sendto()
+                      |
+                      v
+Server → UDP packet → Client
+*/
