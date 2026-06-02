@@ -42,5 +42,72 @@ int main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 /*
-For test
+// 現代化 getaddrinfo() 版本（完整可編譯）
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
+int main(int argc, char *argv[])
+{
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <hostname>...\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 1; i < argc; i++) {
+        const char *host = argv[i];
+        struct addrinfo hints;
+        struct addrinfo *result, *rp;
+        char addrstr[INET6_ADDRSTRLEN];
+
+        memset(&hints, 0, sizeof(struct addrinfo));
+        hints.ai_family = AF_UNSPEC;      // IPv4 + IPv6
+        hints.ai_socktype = SOCK_STREAM;  // 任意即可
+        hints.ai_flags = AI_CANONNAME;    // 要求 canonical name
+
+        int s = getaddrinfo(host, NULL, &hints, &result);
+        if (s != 0) {
+            fprintf(stderr, "getaddrinfo() failed for '%s': %s\n",
+                    host, gai_strerror(s));
+            continue;
+        }
+
+        printf("Host: %s\n", host);
+
+        if (result->ai_canonname)
+            printf(" Canonical name: %s\n", result->ai_canonname);
+
+        printf(" Address(es):");
+
+        for (rp = result; rp != NULL; rp = rp->ai_next) {
+            void *addr;
+            const char *type;
+
+            if (rp->ai_family == AF_INET) {
+                struct sockaddr_in *ipv4 = (struct sockaddr_in *)rp->ai_addr;
+                addr = &(ipv4->sin_addr);
+                type = "IPv4";
+            } else if (rp->ai_family == AF_INET6) {
+                struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)rp->ai_addr;
+                addr = &(ipv6->sin6_addr);
+                type = "IPv6";
+            } else {
+                continue;
+            }
+
+            inet_ntop(rp->ai_family, addr, addrstr, sizeof(addrstr));
+            printf(" [%s] %s", type, addrstr);
+        }
+
+        printf("\n\n");
+        freeaddrinfo(result);
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
 */
