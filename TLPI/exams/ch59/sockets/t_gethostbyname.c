@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 /*
-// 現代化 getaddrinfo() 版本（完整可編譯）
+// getaddrinfo() : 
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,8 +66,8 @@ int main(int argc, char *argv[])
 
         memset(&hints, 0, sizeof(struct addrinfo));
         hints.ai_family = AF_UNSPEC;      // IPv4 + IPv6
-        hints.ai_socktype = SOCK_STREAM;  // 任意即可
-        hints.ai_flags = AI_CANONNAME;    // 要求 canonical name
+        hints.ai_socktype = SOCK_STREAM;  // 嚙踝蕭嚙瞇嚙磐嚙箠
+        hints.ai_flags = AI_CANONNAME;    // 嚙緯嚙瘩 canonical name
 
         int s = getaddrinfo(host, NULL, &hints, &result);
         if (s != 0) {
