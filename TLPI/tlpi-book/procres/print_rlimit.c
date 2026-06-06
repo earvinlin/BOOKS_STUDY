@@ -12,7 +12,12 @@
 
 #include <sys/resource.h>
 #include "print_rlimit.h"       /* Declares function defined here */
-#include "tlpi_hdr.h"
+//#include "tlpi_hdr.h"
+#if defined(USE_MYLIB_INTEL)
+    #include "../mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
 
 int                     /* Print 'msg' followed by limits for 'resource' */
 printRlimit(const char *msg, int resource)
