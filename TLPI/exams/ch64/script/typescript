@@ -1,0 +1,11 @@
+[?2004h[earvin@vmubuntu script]$ tty
+[?2004l/dev/pts/4
+[?2004h[earvin@vmubuntu script]$ echo $$
+[?2004l63355
+[?2004h[earvin@vmubuntu script]$ ps -p 8135 -p 63355 -C script_arm -o "pid ppid sid tty cd"[K[Kmd"
+[?2004l    PID    PPID     SID TT       CMD
+   8135    8134    8135 pts/3    -bash
+  63354    8135    8135 pts/3    ./script_arm
+  63355   63354   63355 pts/4    /bin/bash
+[?2004h[earvin@vmubuntu script]$ exit
+[?2004lexit

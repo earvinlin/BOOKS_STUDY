@@ -6,7 +6,7 @@
 #define _XOPEN_SOURCE 600
 #include <stdlib.h>
 #include <fcntl.h>
-#include "pty_master_open.h" /* Declares ptyMasterOpen() */
+#include "../../../tlpi-book/mylib/pty_master_open.h" /* Declares ptyMasterOpen() */
 #if defined(USE_MYLIB_INTEL)
     #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
 #else
