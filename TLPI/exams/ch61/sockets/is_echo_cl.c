@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 
         /* Close writing channel, so server sees EOF */
     
+        // TCP 半關閉，常用於 client 告訴 server「我已經送完了」。
         if (shutdown(sfd, SHUT_WR) == -1)
             errExit("shutdown");
 
