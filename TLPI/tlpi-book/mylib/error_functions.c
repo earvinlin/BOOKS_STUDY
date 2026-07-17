@@ -222,6 +222,13 @@ cmdLineErr(const char *format, ...)
 
     fprintf(stderr, "Command-line usage error: ");
     va_start(argList, format);
+    /*
+        int vfprintf(FILE *stream, const char *format, va_list arg);
+        ✔ 功能
+        • 將格式化後的輸出寫入到 stream（例如 stdout, stderr, 或檔案）。
+        • 使用 va_list 取代一般 printf 系列的可變參數。
+        • 是所有「可變參數輸出」函式的底層工具。
+    */
     vfprintf(stderr, format, argList);
     va_end(argList);
 
