@@ -1,12 +1,46 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "D:\\workspaces\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\",
   "Documents": [],
+=======
+  "WorkspaceRootPath": "E:\\WORKSPACES\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\WORKSPACES\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+>>>>>>> 9a6424b656254946b2dec4e797b47a5d8e76133a
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
+<<<<<<< HEAD
       "DocumentGroups": []
+=======
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ErrorShow.cpp",
+              "DocumentMoniker": "E:\\WORKSPACES\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp",
+              "RelativeDocumentMoniker": "\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp",
+              "ToolTip": "E:\\WORKSPACES\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp",
+              "RelativeToolTip": "\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAAAIsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-06T00:27:03.259Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+>>>>>>> 9a6424b656254946b2dec4e797b47a5d8e76133a
     }
   ]
 }
