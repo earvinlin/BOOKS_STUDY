@@ -79,7 +79,7 @@ getNum(const char *fname, const char *arg, int flags, const char *name)
         • errno = 0 的必要性： strtol 在發生溢位（數值大於 LONG_MAX 或小於 LONG_MIN）
           時會設定全域變數 errno。因為 errno 不會自動歸零，所以在呼叫前必須手動清空。
         • endptr（終點指標）： strtol 成功轉換後，會把「第一個無法解析的字元位置」存入 endptr。
-
+                            例如："123abc" → 轉換 123，endptr 指向 'a'。
         strtol() usage :
         long int strtol(const char *str, char **endptr, int base);
         str     要轉換的字串，可含空白、正負號、數字。
