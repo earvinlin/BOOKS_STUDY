@@ -11,6 +11,7 @@
 #include <string.h> // 使用 strrchr()
 
 #define MAX_READ 20
+#define BUF_SIZE 30  // 每次最多讀取 128 位元組
 
 char * getProgName(char *s) {
     // 尋找字串中最後一個 '/'
@@ -26,7 +27,7 @@ char * getProgName(char *s) {
 }
 
 int main(int argc, char *argv[]) {
-    int ap;
+    int fd, ap;
     char buffer[MAX_READ];
 
     /* 
@@ -50,27 +51,76 @@ int main(int argc, char *argv[]) {
         printf("=== %s ===\n", getProgName(s));
         exit(1);
     }
-    
+
+/*
     // 建立新檔案，並設定權限為 0644 (所有者可讀寫，其他人唯讀)
     int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 
-        S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+            S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
     if (fd == -1) {
         perror("open fail!");
         return 1;
     }
     printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd);
+*/
 
     char * op = argv[2];
     switch (*op) {
         case 'r':
         case 'R':
-            printf("Input r/R value is %c\n", *op);
+            fd = open(argv[1], O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+            if (fd == -1) {
+                perror("open fail! (for read)");
+                return 1;
+            }
+            printf("成功開啟檔案，檔案描述符(FD)為：%d\n", fd);
+
+            char buffer[BUF_SIZE];
+            ssize_t bytes_read;
+            
+            while ((bytes_read = read(fd, buffer, BUF_SIZE)) > 0) {
+                // 將讀取到的資料寫入 Terminal (標準輸出 STDOUT_FILENO = 1)
+                if (write(STDOUT_FILENO, buffer, bytes_read) != bytes_read) {
+                    perror("write 寫入螢幕失敗");
+                    close(fd);
+                    return 1;
+                }
+            }
+            if (bytes_read == -1) {
+                perror("read 發生錯誤");
+            } else {
+                printf("\n=== 檔案讀取完畢 (EOF) ===\n");
+            }
+            close(fd);  // 關閉檔案
             break;
 
         case 'w':
         case 'W':
-            printf("Input w/W value is %c\n", *op);
+            // 開啟/建立檔案，設定權限為 0644 (使用者可讀寫，其他人唯讀)
+            fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 
+                        S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+            if (fd == -1) {
+                perror("open fail!");
+                return 1;
+            }
+            printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd);     
+
+            char buffer2[BUF_SIZE];
+            ssize_t bytes_read2;
+
+            while ((bytes_read2 = read(STDIN_FILENO, buffer2, BUF_SIZE)) > 0) {
+                if (write(fd, buffer2, bytes_read2) != bytes_read2) {
+                    perror("write 寫入異常");
+                    close(fd);
+                    return 1;
+                }
+            }
+            if (bytes_read2 == -1) {
+                perror("read 讀取錯誤");
+            }
+            close(fd);
+            printf("\n資料已成功寫入 %s！\n", argv[1]);
+
             break;
 
         default:
@@ -97,7 +147,6 @@ int main(int argc, char *argv[]) {
         printf("成功寫入 %zd 位元組到 test_write.txt\n", bytes_written);
     }
 */
-    close(fd);  // 關閉檔案
 
     return 0;
 }
