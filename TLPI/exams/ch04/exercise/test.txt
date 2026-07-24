@@ -1,3 +1,4 @@
-test test
-ddddddd
-hahahaha    hahah 
+Hello , man~~
+I's testing a file.
+...
+     Failure, amount 10000.

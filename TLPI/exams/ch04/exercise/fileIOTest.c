@@ -10,8 +10,8 @@
 #include <libgen.h> // 使用 basename() 必須引入此標頭檔
 #include <string.h> // 使用 strrchr()
 
-#define MAX_READ 20
 #define BUF_SIZE 30  // 每次最多讀取 128 位元組
+
 
 char * getProgName(char *s) {
     // 尋找字串中最後一個 '/'
@@ -28,8 +28,9 @@ char * getProgName(char *s) {
 
 int main(int argc, char *argv[]) {
     int fd, ap;
-    char buffer[MAX_READ];
-
+    char buffer[BUF_SIZE];
+    ssize_t bytes_read;
+    
     /* 
         argv的資料結構本質上是指向陣列的指標
         ex: ./myprog -v input.txt 100
@@ -42,8 +43,7 @@ int main(int argc, char *argv[]) {
 
     printf("The argc value is %d\n", argc);
     if (argc != 3) {
-        // 使用 basename 取得不帶路徑的純檔名
-        char *prog_name = basename(argv[0]);
+        char *prog_name = basename(argv[0]);    // 使用 basename 取得不帶路徑的純檔名
         printf("parameter error, program is %s\n", argv[0]);
         printf("parameter error, program is %s\n", prog_name);
 
@@ -51,18 +51,6 @@ int main(int argc, char *argv[]) {
         printf("=== %s ===\n", getProgName(s));
         exit(1);
     }
-
-/*
-    // 建立新檔案，並設定權限為 0644 (所有者可讀寫，其他人唯讀)
-    int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 
-            S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-
-    if (fd == -1) {
-        perror("open fail!");
-        return 1;
-    }
-    printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd);
-*/
 
     char * op = argv[2];
     switch (*op) {
@@ -74,9 +62,6 @@ int main(int argc, char *argv[]) {
                 return 1;
             }
             printf("成功開啟檔案，檔案描述符(FD)為：%d\n", fd);
-
-            char buffer[BUF_SIZE];
-            ssize_t bytes_read;
             
             while ((bytes_read = read(fd, buffer, BUF_SIZE)) > 0) {
                 // 將讀取到的資料寫入 Terminal (標準輸出 STDOUT_FILENO = 1)
@@ -113,48 +98,24 @@ int main(int argc, char *argv[]) {
             }
             printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd);     
 
-            char buffer2[BUF_SIZE];
-            ssize_t bytes_read2;
-
-            while ((bytes_read2 = read(STDIN_FILENO, buffer2, BUF_SIZE)) > 0) {
-                if (write(fd, buffer2, bytes_read2) != bytes_read2) {
+            while ((bytes_read = read(STDIN_FILENO, buffer, BUF_SIZE)) > 0) {
+                if (write(fd, buffer, bytes_read) != bytes_read) {
                     perror("write 寫入異常");
                     close(fd);
                     return 1;
                 }
             }
-            if (bytes_read2 == -1) {
+            if (bytes_read == -1) {
                 perror("read 讀取錯誤");
             }
             close(fd);
             printf("\n資料已成功寫入 %s！\n", argv[1]);
-
             break;
 
         default:
             printf("Unknown command line : %c\n", *op);
             break;
     }
-  
-
-/*
-    // 呼叫 write 寫入檔案
-    char text[10] ="work work";
-//    const char *text = "test test\n";
-    size_t len = 10;
-    ssize_t bytes_written = write(fd, text, len);
-
-    // 防呆：檢查是否寫入成功且長度相符
-    if (bytes_written == -1) {
-        perror("write 到檔案失敗");
-        close(fd);
-        return 1;
-    } else if ((size_t)bytes_written != len) {
-        fprintf(stderr, "警告：未完整寫入資料！預期 %zu，實際寫入 %zd\n", len, bytes_written);
-    } else {
-        printf("成功寫入 %zd 位元組到 test_write.txt\n", bytes_written);
-    }
-*/
 
     return 0;
 }
