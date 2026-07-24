@@ -96,6 +96,14 @@ int main(int argc, char *argv[]) {
 
         case 'w':
         case 'W':
+        /*
+            1. Ctrl + D 機制： 在 Linux Terminal 中，Ctrl + D 會發送 EOF（End Of File）訊號，
+               讓 getchar() 回傳 EOF（通常為 -1），或是讓 read() 回傳 0，進而結束 while 迴圈。
+	        2. Terminal 行緩衝（Line Buffering）： 終端機預設是按下 Enter 鍵後才會將整列資料送入程
+               式緩衝區中處理。
+	        3. open() 旗標選擇： 在系統呼叫範例中，使用 O_WRONLY | O_CREAT | O_TRUNC 可以確保每次
+               執行時，若檔案不存在會建立新檔，已存在則清空舊內容重新寫入。        
+        */
             // 開啟/建立檔案，設定權限為 0644 (使用者可讀寫，其他人唯讀)
             fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 
                         S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
