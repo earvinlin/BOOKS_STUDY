@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    int fd = open("testReadFile.txt", O_RDONLY);
+    int fd = open("readFileTest.txt", O_RDONLY);
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
