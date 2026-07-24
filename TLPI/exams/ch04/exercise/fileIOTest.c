@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     */
 
     printf("The argc value is %d\n", argc);
-    if (argc != 3) {
+    if (argc < 3) {
         char *prog_name = basename(argv[0]);    // 使用 basename 取得不帶路徑的純檔名
         printf("parameter error, program is %s\n", argv[0]);
         printf("parameter error, program is %s\n", prog_name);
@@ -53,6 +53,11 @@ int main(int argc, char *argv[]) {
     }
 
     char * op = argv[2];
+    long sparseFileSize = 0;
+    char * writeStr;
+//    size_t len;
+    off_t offset;
+
     switch (*op) {
         case 'r':
         case 'R':
@@ -110,6 +115,42 @@ int main(int argc, char *argv[]) {
             }
             close(fd);
             printf("\n資料已成功寫入 %s！\n", argv[1]);
+            break;
+        
+        case 'h' :
+        case 'H' :
+            sparseFileSize = atol(argv[3]);
+            writeStr = argv[4];
+
+            fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+            if (fd == -1) {
+                perror("open fail!");
+                return 1;
+            }
+            printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd);     
+            
+            int numWritten = write(fd, writeStr, strlen(writeStr));
+            if (numWritten == -1) {
+                errExit("write");
+                close(fd);        
+                return 1;        
+            }
+            printf("%s: wrote %ld bytes\n", writeStr, (long) numWritten);
+
+            // generate hold file
+//            offset = getLong(&argv[ap][1], GN_ANY_BASE, argv[ap]);
+//                if (lseek(fd, offset, SEEK_SET) == -1)
+                if (lseek(fd, sparseFileSize, SEEK_SET) == -1)
+                    errExit("lseek");
+                printf("%s: seek succeeded\n", argv[3]);
+
+            // 一定要寫入至少1byte資料，才會產生空洞檔案
+            if (write(fd, "H", 1) != 1) {
+                perror("write");
+                exit(EXIT_FAILURE);
+            }
+
+            close(fd);
             break;
 
         default:
