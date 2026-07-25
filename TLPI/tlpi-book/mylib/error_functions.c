@@ -48,6 +48,7 @@ terminate(Boolean useExit3)
       * outputting the caller-supplied error message specified in
         'format' and 'ap'. */
 
+
 static void
 outputError(Boolean useErr, int err, Boolean flushStdout,
         const char *format, va_list ap)
@@ -57,6 +58,18 @@ outputError(Boolean useErr, int err, Boolean flushStdout,
 
     vsnprintf(userMsg, BUF_SIZE, format, ap);
 
+    /*
+    這一段是 Linux 系統工程師除錯時的「終極外掛」。當 useErr 為真時，它會將傳進來的
+    錯誤號碼 err（即 errno）翻譯成兩種格式：
+	1. ename[err]（符號常數名稱）：
+        這是作者自訂的陣列，會把 2 翻譯成字串 ENOENT，把 13 翻譯成 EACCES。這讓工
+        程師在 log 裡一眼就能看出具體的錯誤巨集名稱！
+	2. strerror(err)（系統內建描述）：
+        呼叫標準 C 函式庫，把 2 翻譯成 "No such file or directory"。
+    • 合併效果：
+        如果 errno 是 2，這一段處理完後，errText 裡面就會存入漂亮的格式化字串：
+        " [ENOENT No such file or directory]"。
+    */
     if (useErr)
         snprintf(errText, BUF_SIZE, " [%s %s]",
                 (err > 0 && err <= MAX_ENAME) ?
@@ -64,6 +77,12 @@ outputError(Boolean useErr, int err, Boolean flushStdout,
     else
         snprintf(errText, BUF_SIZE, ":");
 
+/*
+    在 GCC 7 版本之後，編譯器引入了非常嚴格的 -Wformat-truncation（格式化截斷警告）。
+    為了在開啟 -Wall（最嚴格編譯）時保持畫面乾淨，作者用 #pragma 告訴 GCC：「我知道這裡
+    可能會被截斷，這在我的安全預期內（最多就是印出前 500 個字），請暫時閉嘴，不要噴警告！」
+    隨後再用 pop 還原編譯器的警告設定。
+*/
 #if __GNUC__ >= 7
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-truncation"
@@ -73,6 +92,11 @@ outputError(Boolean useErr, int err, Boolean flushStdout,
 #pragma GCC diagnostic pop
 #endif
 
+    /*
+        stdout（標準輸出）通常是行緩衝（Line-buffered），如果沒有遇到換行符 \n，它會
+        暫存在記憶體，不立刻印在螢幕上。
+        stderr（標準錯誤）通常是無緩衝（Unbuffered），一有資料就會立刻搶佔螢幕噴出來。
+    */
     if (flushStdout)
         fflush(stdout);       /* Flush any pending stdout */
     fputs(buf, stderr);
@@ -198,6 +222,13 @@ cmdLineErr(const char *format, ...)
 
     fprintf(stderr, "Command-line usage error: ");
     va_start(argList, format);
+    /*
+        int vfprintf(FILE *stream, const char *format, va_list arg);
+        ✔ 功能
+        • 將格式化後的輸出寫入到 stream（例如 stdout, stderr, 或檔案）。
+        • 使用 va_list 取代一般 printf 系列的可變參數。
+        • 是所有「可變參數輸出」函式的底層工具。
+    */
     vfprintf(stderr, format, argList);
     va_end(argList);
 

@@ -1,5 +1,9 @@
 {
   "Version": 1,
+<<<<<<< HEAD
+  "WorkspaceRootPath": "D:\\workspaces\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\",
+  "Documents": [],
+=======
   "WorkspaceRootPath": "E:\\WORKSPACES\\GithubProjects\\BOOKS_STUDY\\WindowsViaC5e\\",
   "Documents": [
     {
@@ -7,10 +11,14 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:\u300ASOURCE_CODES\u300B\\windows-via-c-cpp-master\\src\\01-ErrorShow\\ErrorShow.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
+>>>>>>> 9a6424b656254946b2dec4e797b47a5d8e76133a
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
+<<<<<<< HEAD
+      "DocumentGroups": []
+=======
       "DocumentGroups": [
         {
           "DockedWidth": 200,
@@ -32,6 +40,7 @@
           ]
         }
       ]
+>>>>>>> 9a6424b656254946b2dec4e797b47a5d8e76133a
     }
   ]
 }

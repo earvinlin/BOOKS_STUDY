@@ -1,4 +1,7 @@
 {
+<<<<<<< HEAD
+  "ExpandedNodes": [],
+=======
   "ExpandedNodes": [
     "",
     "\\《SOURCE_CODES》",
@@ -7,5 +10,6 @@
     "\\《SOURCE_CODES》\\windows-via-c-cpp-master\\src\\01-ErrorShow"
   ],
   "SelectedNode": "\\exams",
+>>>>>>> 9a6424b656254946b2dec4e797b47a5d8e76133a
   "PreviewInSolutionExplorer": false
 }

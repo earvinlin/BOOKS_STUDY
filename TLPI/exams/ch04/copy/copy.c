@@ -1,6 +1,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "../tlpi-book/mylib/tlpi_hdr.h"
+#if defined(USE_MYLIB_INTEL)
+    #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
 
 #ifndef BUF_SIZE
 #define BUF_SIZE 1024
