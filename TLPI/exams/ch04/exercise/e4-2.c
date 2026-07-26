@@ -31,10 +31,18 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     printf("成功開啟檔案，檔案描述符(FD)為：%d\n", fd1);
-            
+
+    // 開啟/建立檔案，設定權限為 0644 (使用者可讀寫，其他人唯讀)
+    fd2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 
+                S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    if (fd2 == -1) {
+        perror("open fail!");
+        return 1;
+    }
+    printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd2);      
+
     while ((bytes_read = read(fd1, buffer, BUF_SIZE)) > 0) {
-        // 將讀取到的資料寫入 Terminal (標準輸出 STDOUT_FILENO = 1)
-        if (write(STDOUT_FILENO, buffer, bytes_read) != bytes_read) {
+        if (write(fd2, buffer, bytes_read) != bytes_read) {
             perror("write 寫入螢幕失敗");
             close(fd1);
             return 1;
@@ -48,6 +56,7 @@ int main(int argc, char *argv[]) {
     }
 
     close(fd1);  // 關閉檔案
+    close(fd2);  // 關閉檔案
 
     return 0;
 }
