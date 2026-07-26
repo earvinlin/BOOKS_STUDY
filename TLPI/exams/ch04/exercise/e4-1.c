@@ -11,10 +11,12 @@
 
     # 2. 測試預設（覆蓋）模式
     echo "Hello, World!" | ./e4-1_arm output.txt
+    echo "Hello, World!" | ./e4-1_intel output_a.txt output_b.txt
     # 螢幕會印出 Hello, World!，且 output.txt 內容為 "Hello, World!"
 
     # 3. 測試 -a（追加）模式
     echo "Second Line" | ./e4-1_arm -a output.txt
+    echo "Second Line" | ./e4-1_intel -a output_a.txt output_b.txt
     # 螢幕會印出 Second Line，且 output.txt 內容變為 2 行！
     cat output.txt
 */
