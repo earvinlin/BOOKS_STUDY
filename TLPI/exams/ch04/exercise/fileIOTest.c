@@ -119,6 +119,7 @@ int main(int argc, char *argv[]) {
         
         case 'h' :
         case 'H' :
+            // example: ./fileIOTest_linux h h.txt 100000 HoldFile
             sparseFileSize = atol(argv[3]);
             writeStr = argv[4];
 

@@ -12,7 +12,11 @@
 
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "../tlpi-book/mylib/tlpi_hdr.h"
+#if defined(USE_MYLIB_INTEL)
+#include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"
+#else
+#include "../../../tlpi-book/mylib/tlpi_hdr.h"
+#endif
 
 int main(int argc, char *argv[])
 {
