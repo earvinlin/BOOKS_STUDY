@@ -32,24 +32,7 @@ int main(int argc, char *argv[]) {
         perror("open source!");
         exit(EXIT_FAILURE);
     }
-<<<<<<< HEAD
-    printf("成功開啟檔案，檔案描述符(FD)為：%d\n", fd1);
 
-    // 開啟/建立檔案，設定權限為 0644 (使用者可讀寫，其他人唯讀)
-    fd2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 
-                S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-    if (fd2 == -1) {
-        perror("open fail!");
-        return 1;
-    }
-    printf("成功建立檔案，檔案描述符(FD)為：%d\n", fd2);      
-
-    while ((bytes_read = read(fd1, buffer, BUF_SIZE)) > 0) {
-        if (write(fd2, buffer, bytes_read) != bytes_read) {
-            perror("write 寫入螢幕失敗");
-            close(fd1);
-            return 1;
-=======
     printf("成功開啟檔案，檔案描述符(FD)為：%d\n", inFd);
 
     //=== 寫入檔案 ===//
@@ -104,10 +87,8 @@ int main(int argc, char *argv[]) {
                     }
                 }
             }
->>>>>>> f42e33d3e826c8066ab63c3c492784c89b62d7d2
         }
     }
-
 
     if (bytes_read == -1) {
         perror("read 發生錯誤");
@@ -115,13 +96,8 @@ int main(int argc, char *argv[]) {
     }
     printf("\n資料已成功寫入 %s！\n", argv[2]);
 
-<<<<<<< HEAD
-    close(fd1);  // 關閉檔案
-    close(fd2);  // 關閉檔案
-=======
     close(inFd);  // 關閉檔案
     close(outFd);  // 關閉檔案
->>>>>>> f42e33d3e826c8066ab63c3c492784c89b62d7d2
 
     return 0;
 }
