@@ -1,0 +1,7 @@
+e);
+    return progName;
+}
+
+int main(int argc, char *argv[]) {
+    int infd, outfd, ap;
+    char buf

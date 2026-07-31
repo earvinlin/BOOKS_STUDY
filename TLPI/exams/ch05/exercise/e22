@@ -1,0 +1,3 @@
+ BUF_SIZE)) > 0) {
+        snprintf(outflname, sizeof(outflname), "%c%02d", prefix, i++);
+        ou

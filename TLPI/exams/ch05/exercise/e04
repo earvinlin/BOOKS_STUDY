@@ -1,0 +1,3 @@
+e <libgen.h> // 使用 basename() 必須引入此標頭檔
+#include <string.h> // 使用 strrchr()
+

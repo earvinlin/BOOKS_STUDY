@@ -1,0 +1,4 @@
+功寫入 %s！\n", outflname);
+    }
+    if (bytes_read == -1) {
+        perror("read 發生錯誤"

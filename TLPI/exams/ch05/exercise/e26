@@ -1,0 +1,3 @@
+ª”
+        if (write(outfd, buffer, bytes_read) != bytes_read) {
+            perror("write å¯«å…¥ç•°

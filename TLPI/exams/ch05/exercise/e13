@@ -1,0 +1,3 @@
+��質上是指向陣列的指標
+        ex: ./splitFileTest spfile.txt 100
+        argv[0] ""./spli

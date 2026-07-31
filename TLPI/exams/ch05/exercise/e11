@@ -1,0 +1,5 @@
+\0')
+    char prefix = 'e';
+    ssize_t bytes_read;
+    char * op = argv[2];
+    long sparseFileSize

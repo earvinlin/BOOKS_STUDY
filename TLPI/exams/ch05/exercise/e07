@@ -1,0 +1,3 @@
+    progName++; // 跳過 '/' 本身，指向檔名開頭
+    } else {
+        progName = s; // 如�

@@ -1,0 +1,5 @@
+);
+    } else {
+        printf("\n=== 檔案讀取完畢 (EOF) ===\n");
+    }
+    close(infd);  // �

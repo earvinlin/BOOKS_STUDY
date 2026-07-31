@@ -1,0 +1,6 @@
+meter error, program is %s\n", prog_name);
+        exit(1);
+    }
+
+    // 讀取要分割的檔案
+ 

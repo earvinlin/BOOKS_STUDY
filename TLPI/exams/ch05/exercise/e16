@@ -1,0 +1,5 @@
+ 個參數
+    */
+    printf("The argc value is %d\n", argc);
+    if (argc < 3) {
+        char *prog

@@ -1,0 +1,4 @@
+         perror("read 讀取錯誤");
+        }
+        close(outfd);
+        printf("\n資料已成

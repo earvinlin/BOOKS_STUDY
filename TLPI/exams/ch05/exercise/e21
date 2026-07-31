@@ -1,0 +1,4 @@
+描述符(FD)為：%d\n", infd);
+    
+    uint8_t i = 0;
+    while ((bytes_read = read(infd, buffer,

@@ -1,0 +1,5 @@
+#define BUF_SIZE 100  // 每次最多讀取 128 位元組
+
+
+char * getProgName(char *s) {
+    // 尋

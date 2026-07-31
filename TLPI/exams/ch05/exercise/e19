@@ -1,0 +1,3 @@
+   infd = open(argv[1], O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    if (infd == -1) {
+    

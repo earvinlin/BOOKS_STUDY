@@ -1,0 +1,5 @@
+找字串中最後一個 '/'
+    char *progName = strrchr(s, '/');
+
+    if (progName != NULL) {
+    

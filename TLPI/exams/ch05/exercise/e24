@@ -1,0 +1,5 @@
+_IROTH);
+        if (outfd == -1) {
+            perror("open fail!");
+            return 1;
+        
