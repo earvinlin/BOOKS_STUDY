@@ -1,2 +1,0 @@
-tFileTest"  程式本身的名稱/路徑（永遠是第一個參數）
-        argv[1] "spfile.txt" 

@@ -1,2 +1,0 @@
-fer[BUF_SIZE];
-    char outflname[10]; // 用來存放生成的字串空間 (記得要留空間給 '

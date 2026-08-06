@@ -1,2 +1,0 @@
-_name = basename(argv[0]);    // 使用 basename 取得不帶路徑的純檔名
-        printf("para

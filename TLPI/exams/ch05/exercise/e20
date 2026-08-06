@@ -1,4 +1,0 @@
-    perror("open fail! (for read)");
-        return 1;
-    }
-    printf("成功開啟檔案，檔案

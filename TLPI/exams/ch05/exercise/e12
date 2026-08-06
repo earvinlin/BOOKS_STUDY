@@ -1,7 +1,0 @@
- = 0;
-    char * writeStr;
-//    size_t len;
-    off_t offset;
-
-    /* 
-        argv的資料結構�

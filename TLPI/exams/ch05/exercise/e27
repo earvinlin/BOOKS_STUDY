@@ -1,6 +1,0 @@
-常");
-            close(outfd);
-            return 1;
-        }
-        if (bytes_read == -1) {
-   

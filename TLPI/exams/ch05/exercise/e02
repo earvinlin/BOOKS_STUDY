@@ -1,4 +1,0 @@
-TEL)
-    #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
-#else
-    #i

@@ -11,7 +11,7 @@
 #include <libgen.h> // 使用 basename() 必須引入此標頭檔
 #include <string.h> // 使用 strrchr()
 
-#define BUF_SIZE 100  // 每次最多讀取 128 位元組
+//#define BUF_SIZE 100  // 每次最多讀取 128 位元組
 
 
 char * getProgName(char *s) {
@@ -27,17 +27,31 @@ char * getProgName(char *s) {
     return progName;
 }
 
+void createArray(int n) {
+    // 指標語法，功能等同於 int ary[n]
+    int *ary = (int *)malloc(n * sizeof(int));
+
+    // 防呆：檢查記憶體是否配置成功
+    if (ary == NULL) {
+        perror("Memory allocation failed");
+        return;
+    }
+
+    // 存取方式與一般陣列完全相同 (使用中括號 [])
+    for (int i = 0; i < n; i++) {
+        ary[i] = (i + 1) * 10;
+        printf("ary[%d] = %d\n", i, ary[i]);
+    }
+
+    free(ary);
+}
 int main(int argc, char *argv[]) {
     int infd, outfd, ap;
     char buffer[BUF_SIZE];
     char outflname[10]; // 用來存放生成的字串空間 (記得要留空間給 '\0')
     char prefix = 'e';
     ssize_t bytes_read;
-    char * op = argv[2];
-    long sparseFileSize = 0;
-    char * writeStr;
-//    size_t len;
-    off_t offset;
+
 
     /* 
         argv的資料結構本質上是指向陣列的指標
@@ -53,6 +67,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    int *ary = (int *)malloc(atoi(argv[2]) * sizeof(char));
     // 讀取要分割的檔案
     infd = open(argv[1], O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
     if (infd == -1) {

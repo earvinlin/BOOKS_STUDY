@@ -1,3 +1,0 @@
-nistd.h>  // close()
-#include <sys/stat.h> // S_IRUSR, S_IWUSR 權限巨集
-#if defined(USE_MYLIB_IN
