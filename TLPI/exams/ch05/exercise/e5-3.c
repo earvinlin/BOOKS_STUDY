@@ -7,13 +7,18 @@
  * 開啟檔案，但是若有提供第三個命令列參數（x），則應該忽略 O_APPEND旗標，並在每次 
  * write（）以前，將程式改為執行lseek（fd, O, SEEK_END） 呼叫。在沒有x參數的情況
  * 下，同時執行此程式的兩個實體（instance），寫入一百萬個位元組到相同的檔案：
- * $ e5-3 f1 1000000 & atomic_append f1 1000000
+ * $ ./e5-3_arm f1 1000000 & ./e5-3_arm f1 1000000
  * 重複同樣的步驟，寫到不同的檔案，但是這次要設定x參數：
- * $ e5-3 f2 x x& atomic_append f2 1000000 x
+ * $ ./e5-3_arm f2 1000000 x & ./e5-3_arm f2 1000000 x
  * 使用1-1列出檔案f1及f2的大小，並表達其差異之處。
  * 
+ * 【編譯指令】
+ * -- 以 macos為例，outfile = e5-3_arm --
+  gcc e5-3.c \
+  -I/home/earvin/workspaces/GithubProjects/BOOKS_STUDY/TLPI/tlpi-book/mylib \
+  -L/home/earvin/workspaces/GithubProjects/BOOKS_STUDY/TLPI/tlpi-book/mylib \
+  -ltlpi -o e5-3_arm
  */
-#define _LARGEFILE64_SOURCE
 #include <sys/stat.h>
 #include <fcntl.h>
 #if defined(USE_MYLIB_INTEL)
@@ -25,21 +30,37 @@
 int main(int argc, char *argv[])
 {
     int fd;
-    off_t off;
+    mode_t mode =  S_IRUSR | S_IWUSR;
+    int isAppend = 0;
 
-    if (argc != 3 || strcmp(argv[1], "--help") == 0)
-        usageErr("%s pathname offset\n", argv[0]);
-    
-    fd = open(argv[1], O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+    int flag;
+    if (argc == 4 && strcmp(argv[3], "x") == 0)
+        flag =  O_RDWR | O_CREAT;
+    else {
+         flag = O_RDWR | O_APPEND | O_CREAT;
+         isAppend = 1;
+    }
+
+    fd = open(argv[1], flag, mode);
     if (fd == -1)
         errExit("open");
 
-    off = atoll(argv[2]);
-    if (lseek(fd, off, SEEK_SET) == -1)
-        errExit("lseek");
+    int numCnt = 0;
+    int writeCnt= atoi(argv[2]);
+    while (numCnt < writeCnt) {
+        if (isAppend) {
+        if (write(fd, "a", 1) == -1) 
+            errExit("write");
+        } else {
+        if (lseek(fd, 0, SEEK_END) == -1)
+            errExit("lseek");
+        if (write(fd, "a", 1) == -1) 
+            errExit("write");            
+        }
+        numCnt = numCnt + 1;
+    }
     
-    if (write(fd, "test1 test1\n", 12) == -1) 
-        errExit("write");
-    
+    close(fd);
+        
     exit(EXIT_SUCCESS);
 }
