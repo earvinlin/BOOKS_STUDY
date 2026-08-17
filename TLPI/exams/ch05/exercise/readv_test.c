@@ -15,7 +15,7 @@
 
 
 int main(void) {
-    int fd = open("data.bin", O_RDONLY);
+    int fd = open("e5-7.bin", O_RDONLY);
     if (fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
