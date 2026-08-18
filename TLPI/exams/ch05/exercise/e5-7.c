@@ -71,6 +71,5 @@ int main(int argc, char *argv[])
 
     // 使用 my_writev() 寫到另一個檔案
 
-    
     return 0;
 }
