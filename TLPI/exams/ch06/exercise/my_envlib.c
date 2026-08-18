@@ -52,6 +52,5 @@ int my_unsetenv(const char *name) {
             ep++;
         }
     }
-
     return 0;
 }
