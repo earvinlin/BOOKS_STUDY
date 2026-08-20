@@ -2,9 +2,11 @@
  * 修改列表7-1的程式(free_and_sbrk.c)，在每次執行malloc()之後，印出目前的program break值。指
  * 定一個小的配置區塊來執行程式。這將能展示malloc()在每次呼明時不會用sbrk()調整program break ，
  * 而是定期分配大塊的記憶體，並每次傳回一小片記憶體給呼叫者。
+ * command syntax :
+ * ./e7-1_arm 1000 10240 1 1 999
+ * ./e7-1_arm 1000 10240 1 500 1000
  */
 #include <stdlib.h>
-//#include <string.h>
 #include <errno.h>
 #if defined(USE_MYLIB_INTEL)
     #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
@@ -34,6 +36,8 @@ int main(int argc, char *argv[])
     if (freeMax > numAllocs)
         cmdLineErr("free-max > num-allocs\n");
 
+    // sbrk(0)的意思是：向作業系統查詢目前 Program Break(Heap 的邊界)所在的位置，但
+    // 不對 Program Break 做任何移動。
     printf("Initial program break: %10p\n", sbrk(0));
     printf("Allocating %d*%d bytes\n", numAllocs, blockSize);
 
@@ -41,6 +45,9 @@ int main(int argc, char *argv[])
         ptr[j] = malloc(blockSize);
         if (ptr[j] == NULL)
             errExit("malloc");
+        
+        // 印出第幾次分配、指標位址，以及當前的 Program Break
+        printf("malloc[%2d] at %10p | Program break: %10p\n", j, ptr[j], sbrk(0));            
     }
 
     printf("Program break is now: %10p\n", sbrk(0));
