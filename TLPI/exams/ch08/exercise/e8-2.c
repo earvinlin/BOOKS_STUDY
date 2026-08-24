@@ -21,18 +21,73 @@
  */
 #include <stdlib.h>
 #include <errno.h>
+#include <pwd.h> 
 #if defined(USE_MYLIB_INTEL)
     #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
 #else
     #include "../../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
 #endif
 
-struct passwd *get_myptnam(const char*name) {
+void get_myptnam(const char *username) {
+    struct passwd *pw;
 
+    setpwent();
+
+    while ((pw = getpwent()) != NULL) {
+        if (strcmp(pw->pw_name, username) == 0) {
+            // 印出查詢結果
+            printf("=== 使用者資訊(自已實作) ===\n");
+            printf("帳號名稱 (pw_name) : %s\n", pw->pw_name);
+            printf("使用者 ID (pw_uid)  : %u\n", pw->pw_uid);
+            printf("主要群組 ID (pw_gid): %u\n", pw->pw_gid);
+            printf("家目錄 (pw_dir)     : %s\n", pw->pw_dir);
+            printf("預設 Shell (pw_shell): %s\n", pw->pw_shell);
+            break;
+        }
+    }
+    endpwent();
+}
+
+void call_getpwnam(const char *username) {
+    // 透過帳號名稱查詢使用者資訊
+    struct passwd *pw = getpwnam(username);
+
+    // 錯誤與存在性檢查
+    if (pw == NULL) {
+        if (errno != 0) {
+            perror("getpwnam 查詢發生錯誤");
+        } else {
+            printf("找不到使用者: %s\n", username);
+        }
+        exit(EXIT_FAILURE);
+    }
+
+    // 印出查詢結果
+    printf("=== 使用者資訊(呼叫getpwent()) ===\n");
+    printf("帳號名稱 (pw_name) : %s\n", pw->pw_name);
+    printf("使用者 ID (pw_uid)  : %u\n", pw->pw_uid);
+    printf("主要群組 ID (pw_gid): %u\n", pw->pw_gid);
+    printf("家目錄 (pw_dir)     : %s\n", pw->pw_dir);
+    printf("預設 Shell (pw_shell): %s\n", pw->pw_shell);
 }
 
 int main(int argc, char *argv[])
 {
+// 檢查命令列參數
+    if (argc < 2) {
+        printf("使用方式: %s <username>\n", argv[0]);
+        return 1;
+    }
+
+    const char *username = argv[1];
     
+    // 展示原函式呼叫結果
+    call_getpwnam(username);
+
+    printf("\n=======================================\n\n");
+
+    // 依題意自訂呼叫結果
+    get_myptnam(username);
+
     return 0;
 }
