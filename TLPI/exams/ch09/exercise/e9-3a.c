@@ -1,7 +1,7 @@
 /**
  *  == 未完成 20260904 ==
-    使用 setgroups（）及函式庫函式從密碼檔、群組檔（參考8.4節）檢素資訊，以實作 initgroups（）。
-    請記得，呼叫 setgroups（）的行程必須具有特權。
+    使用 setgroups() 及函式庫函式從密碼檔、群組檔(參考8.4節)檢素資訊，以實作 initgroups()。
+    請記得，呼叫 setgroups() 的行程必須具有特權。
     【題目解讀與要求分析】
 	1. initgroups(const char *user, gid_t group) 的作用：
         • 讀取系統的群組檔案（通常為 /etc/group）。
