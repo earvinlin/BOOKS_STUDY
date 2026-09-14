@@ -74,12 +74,11 @@
     呼叫指令                        Real    Effective   Saved   File-system
                                   (RUID)  (EUID)      (SUID)  (FSUID)
     ======================================================================
-    初始狀態                        1000	    0	        0	    0
-    a) setuid(2000)                2000	    2000	    2000	2000
-    b) setreuid(-1, 2000)	       1000	    2000	    2000	2000
-    c) seteuid(2000)	           1000	    2000	       0	2000
-    d) setfsuid(2000)	           1000	       0	       0	2000
-    e) setresuid(-1, 2000, 3000)   1000	    2000	    3000	2000
+    a) setuid(2000)               2000	    2000	    2000	  2000
+    b) setreuid(-1, 2000)	        1000	    2000	    2000	  2000
+    c) seteuid(2000)	            1000	    2000	       0	  2000
+    d) setfsuid(2000)	            1000	       0	       0	  2000
+    e) setresuid(-1, 2000, 3000)  1000	    2000	    3000	  2000
  *
  */
 #include <stdio.h>
@@ -93,6 +92,35 @@
 
 int main(int argc, char *argv[])
 {
+    // 取得主要群組id
+    gid_t group = getgid();
+    printf("Main group ID: %d\n", group);
+
+    // 取得附加群組數量
+    int ngroups = getgroups(0, NULL);
+    if (ngroups == -1) {
+        perror("getgroups 取得數量失敗");
+        return EXIT_FAILURE;
+    }
+    printf("Number of supplementary groups: %d\n", ngroups);
+
+    gid_t *groups = malloc(ngroups * sizeof(gid_t));
+    getgroups(ngroups, groups);
+    for (int i = 0; i < ngroups; i++) {
+        // 正確：改用存放 GID 的陣列變數 groups[i]
+        printf("Supplementary group %d: %d\n", i + 1, groups[i]);
+    } 
 
     return 0;
 }
+/**
+    簡單來說：
+    ．setgid() 修改 主要群組 (primary group)。
+    ．setgroups() 修改 附加群組 (supplementary groups)。
+    ．通常只有 root 或具備 CAP_SETGID 的程序可呼叫。
+    ．在 daemon 權限降級時，常見順序是：
+    setgroups(0, NULL);
+    setgid(gid);
+    setuid(uid);
+    以避免殘留群組權限造成安全風險。
+*/
