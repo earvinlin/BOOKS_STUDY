@@ -92,6 +92,7 @@
 
 int main(int argc, char *argv[])
 {
+    /* 更完整的程式範例可看本章Listing 9-1 idshow.c */
     // 取得主要群組id
     gid_t group = getgid();
     printf("Main group ID: %d\n", group);
