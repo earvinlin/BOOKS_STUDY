@@ -37,6 +37,9 @@ int main(int argc, char *argv[])
     printf("開始秒數：%ld, 微秒：%ld\n", start.tv_sec, start.tv_usec);
     printf("結束秒數：%ld, 微秒：%ld\n", end.tv_sec, end.tv_usec);
     printf("總共耗時：%.6f 秒（或%.2f毫秒）\n", elapsed, elapsed * 1000.0);
+    printf("\n\n");
+
+    //--------------------------------------------------------------//
 
     //-- time() usage --//
     /**
@@ -60,11 +63,50 @@ int main(int argc, char *argv[])
         perror("time() failed");
         return EXIT_FAILURE;
     }
+    printf("【time()】\n");
     printf("當前Unix時間戳記：%ld 秒\n", (long)now);
     printf("當前本地時間：%s", ctime(&now));
 
     srand((unsigned int)time(NULL)); // 使用當前時間作為隨機數種子
     printf("隨機數範例：%d\n", rand() % 100); // 產生 0~99 的隨機數
+    printf("\n\n");
+
+    //--------------------------------------------------------------//
+
+    printf("【ctime()】\n");
+    time_t cnow;
+    // 取得當前 UNIX 時間戳
+    time(&cnow);
+    
+    // 轉換為易讀的本地時間字串並印出
+    // 注意：ctime() 回傳的字串末尾自帶 '\n'
+    printf("當前時間: %s", ctime(&cnow));
+    printf("\n\n");
+
+    //--------------------------------------------------------------//
+
+    // 台北時間 = UTC 時間 + 8 小時 ; UTC 時間 = 台北時間 - 8 小時
+    printf("【gmtime()】\n");
+
+    time_t gmnow;
+    struct tm *utc_time;
+
+    // 取得當前 UNIX 時間戳
+    time(&gmnow);
+    // 轉換為 UTC 時間結構
+    utc_time = gmtime(&gmnow);
+
+    if (utc_time != NULL) {
+        printf("當前 UTC 時間: %04d-%02d-%02d %02d:%02d:%02d\n",
+               utc_time->tm_year + 1900,    // 年份需加上 1900
+               utc_time->tm_mon + 1,        // 月份範圍為 0-11，需加 1
+               utc_time->tm_mday,           // 一月中的第幾天，範圍為 1 ~ 31
+               utc_time->tm_hour,           // 小時（24 小時制），範圍為 0 ~ 23
+               utc_time->tm_min,            // 分鐘，範圍為 0 ~ 59
+               utc_time->tm_sec);           // 秒數，範圍為 0 ~ 60（含閏秒）
+               // tm_wday：星期幾，範圍為 0 ~ 6（0 代表星期日）
+    }
+    printf("\n\n");
 
     return 0;
 }
