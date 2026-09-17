@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     //--------------------------------------------------------------//
 
     // 台北時間 = UTC 時間 + 8 小時 ; UTC 時間 = 台北時間 - 8 小時
-    printf("【gmtime()】\n");
+    printf("【gmtime() vs. localtime()】\n");
 
     time_t gmnow;
     struct tm *utc_time;
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     utc_time = gmtime(&gmnow);
 
     if (utc_time != NULL) {
-        printf("當前 UTC 時間: %04d-%02d-%02d %02d:%02d:%02d\n",
+        printf("當前 UTC時間: %04d-%02d-%02d %02d:%02d:%02d\n",
                utc_time->tm_year + 1900,    // 年份需加上 1900
                utc_time->tm_mon + 1,        // 月份範圍為 0-11，需加 1
                utc_time->tm_mday,           // 一月中的第幾天，範圍為 1 ~ 31
@@ -105,6 +105,24 @@ int main(int argc, char *argv[])
                utc_time->tm_min,            // 分鐘，範圍為 0 ~ 59
                utc_time->tm_sec);           // 秒數，範圍為 0 ~ 60（含閏秒）
                // tm_wday：星期幾，範圍為 0 ~ 6（0 代表星期日）
+    }
+
+    time_t lonow;
+    struct tm *local_time;
+
+    // 取得當前 UNIX 時間戳
+    time(&lonow);
+    // 轉換為本地時間結構
+    local_time = localtime(&lonow);
+
+    if (local_time != NULL) {
+        printf("當前本地時間: %04d-%02d-%02d %02d:%02d:%02d\n",
+               local_time->tm_year + 1900, // 年份需 + 1900
+               local_time->tm_mon + 1,     // 月份範圍 0-11，需 + 1
+               local_time->tm_mday,
+               local_time->tm_hour,
+               local_time->tm_min,
+               local_time->tm_sec);
     }
     printf("\n\n");
 
