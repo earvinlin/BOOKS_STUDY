@@ -1,7 +1,12 @@
 #define _GNU_SOURCE
 #include <sys/utsname.h>
-#include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu use
+//#include "../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu use
 //#include "../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For mac-mini(m2)'s vmubuntu use
+#if defined(USE_MYLIB_INTEL)
+    #include "../../../tlpi-book/mylib-intel/tlpi_hdr.h"   // For linux(intel) use
+#else
+    #include "../../../tlpi-book/mylib/tlpi_hdr.h"         // For macnb's vmubuntu(arm) use
+#endif
 
 int main(int argc, char *argv[])
 {
