@@ -5,6 +5,8 @@
     容，從包含 ppid：的那一行找出父行程。不過要小心一個問題，就是行程父行程（以及其/proc/PID 目錄）可能會
     在掃描全部的/proc/PID 日錄期間消失。
     Compile Cmd : gcc e12-2.c -o e12-2_arm
+
+    (20261005) linux run ok ; mac(vmubuntu for arm) run fail
     -- if needs to debug... --
     gcc -g e12-2.c -o e12-2_arm
     sudo apt install valgrind
