@@ -6,7 +6,7 @@
     在掃描全部的/proc/PID 日錄期間消失。
     Compile Cmd : gcc e12-2.c -o e12-2_arm
 
-    (20261005) linux run ok ; mac(vmubuntu for arm) run fail
+    (20261005) linux run ok ; mac's vmubuntu for arm MAX_PROC = 4194304 ok
     -- if needs to debug... --
     gcc -g e12-2.c -o e12-2_arm
     sudo apt install valgrind
@@ -18,17 +18,19 @@
 #include <dirent.h>
 #include <ctype.h>
 
-#define MAX_PROC 32768
+//#define MAX_PROC 32768
+#define MAX_PROC 4194304
 
+// (鏈結串列) 表示一個行程節點
 typedef struct ProcessNode {
     int pid;
     int ppid;
     char name[256];
     int child_count;
-    struct ProcessNode *children[128];
+    struct ProcessNode *children[128];  // 此行程有哪些子行程
 } ProcessNode;
 
-ProcessNode *nodes[MAX_PROC] = {NULL};
+ProcessNode *nodes[MAX_PROC] = {NULL};  // nodes 陣列
 
 // 遞迴印出行程樹
 void print_tree(ProcessNode *node, int depth) {
@@ -52,6 +54,7 @@ int main() {
         if (isdigit(entry->d_name[0])) {
             int pid = atoi(entry->d_name);
             char path[256];
+            // 讀取 status
             snprintf(path, sizeof(path), "/proc/%d/status", pid);
 
             FILE *fp = fopen(path, "r");
@@ -61,8 +64,10 @@ int main() {
             int ppid = 0;
 
             while (fgets(line, sizeof(line), fp)) {
+                // 抓 Name
                 if (strncmp(line, "Name:", 5) == 0) {
                     sscanf(line + 5, "%s", name);
+                // 抓 PPid
                 } else if (strncmp(line, "PPid:", 5) == 0) {
                     sscanf(line + 5, "%d", &ppid);
                 }
